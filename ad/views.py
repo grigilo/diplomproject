@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView, DetailView, \
     DeleteView
 
 from ad.forms import AdForm
 from ad.models import Ad
+from ad.paginators import AdPaginator
 
 
 # Create your views here.
@@ -29,7 +29,7 @@ class AdUpdateView(LoginRequiredMixin, UpdateView):
 
 class AdListView(ListView):
     model = Ad
-
+    pagination_class = AdPaginator
 
 class AdDetailView(DetailView):
     model = Ad

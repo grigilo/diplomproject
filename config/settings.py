@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -31,10 +32,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
     'corsheaders',
     'ad',
     'users',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +125,6 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -142,6 +145,20 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
 # CACHES
 
 CACHE_ENABLED = True
@@ -153,6 +170,6 @@ if CACHE_ENABLED:
         }
     }
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:8000',]
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000',]
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000', ]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', ]
 CORS_ALLOW_ALL_ORIGINS = False
