@@ -1,54 +1,111 @@
-<div class="collapse bg-dark" id="navbarHeader">
+<header class="p-3 mb-3 border-bottom">
     <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-        <div class="row">
-            <div class="col-sm-8 col-md-7 py-4">
-                <h4 class="text-white">Доска объявлений</h4>
-                <form role="search">
-                    <input class="form-control" type="search" placeholder="Поиск объявления" aria-label="Search">
-                </form>
-            </div>
 
-            <div class="col-sm-4 offset-md-1 py-4">
-                <h4 class="text-white">Навигация</h4>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{% url 'ad:list' %}" class="nav-link px-2 link-body-emphasis">Главная</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'ad:create' %}" class="nav-link px-2 link-body-emphasis">Добавить объявление</a>
+                </li>
+                <li><a href="#" class="nav-link px-2 link-body-emphasis">Поиск объявления</a></li>
+                {% endif %}
+            </ul>
 
-                <ul class="list-unstyled">
+            <div class="dropdown text-end">
+
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
                     {% if user.is_authenticated %}
-                    <h5 class="text-white">{{ user.first_name }} {{ user.last_name }} </h5>
-                    {% endif %}
-                    <li><a href="{% url 'ad:list' %}" class="text-white">Главная</a></li>
-                    {% if user.is_superuser %}
-                    <li><a href="{% url 'admin:index' %}" class="text-white">Панель администратора</a></li>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'users:profile' %}" class="text-white">Мой профиль</a></li>
+                    <img src="media/{{user.avatar}}" alt="mdo" width="32" height="32" class="rounded-circle">
                     {% endif %}
                     {% if user.is_anonymous %}
-                    <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
-                    <li><a href="{% url 'users:register' %}" class="text-white">Зарегистрироваться</a></li>
+                    <img src="media/users/ava.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+                    {% endif %}
+                </a>
+
+                <ul class="dropdown-menu text-small">
+                    {% if user.is_authenticated %}
+                    <li><a class="dropdown-item">{{ user.first_name }} {{ user.last_name }}</a></li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                    <li><a class="dropdown-item" href="{% url 'admin:index' %}">Панель администратора</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'users:profile' %}">Мой профиль</a></li>
+                    {% endif %}
+                    {% if user.is_anonymous %}
+                    <li><a class="dropdown-item" href="{% url 'users:login' %}">Войти</a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:register' %}">Зарегистрироваться</a></li>
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <form action="{% url 'users:logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link-black">Выйти</button>
-                    </form>
-                    {% endif %}
+                    <li>
+                        <form action="{% url 'users:logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning">Выйти</button>
+                        </form>
+                        {% endif %}
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
-</div>
-<div class="navbar navbar-dark bg-dark box-shadow">
-    <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand d-flex align-items-center">
+</header>
 
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+<!--<div class="collapse bg-dark" id="navbarHeader">-->
+<!--    <div class="container">-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-sm-8 col-md-7 py-4">-->
+<!--                <h4 class="text-white">Доска объявлений</h4>-->
+<!--                <form role="search">-->
+<!--                    <input class="form-control" type="search" placeholder="Поиск объявления" aria-label="Search">-->
+<!--                </form>-->
+<!--            </div>-->
+
+<!--            <div class="col-sm-4 offset-md-1 py-4">-->
+<!--                <h4 class="text-white">Навигация</h4>-->
+
+<!--                <ul class="list-unstyled">-->
+<!--                    {% if user.is_authenticated %}-->
+<!--                    <h5 class="text-white">{{ user.first_name }} {{ user.last_name }} </h5>-->
+<!--                    {% endif %}-->
+<!--                    <li><a href="{% url 'ad:list' %}" class="text-white">Главная</a></li>-->
+<!--                    {% if user.is_superuser %}-->
+<!--                    <li><a href="{% url 'admin:index' %}" class="text-white">Панель администратора</a></li>-->
+<!--                    {% endif %}-->
+<!--                    {% if user.is_authenticated %}-->
+<!--                    <li><a href="{% url 'users:profile' %}" class="text-white">Мой профиль</a></li>-->
+<!--                    {% endif %}-->
+<!--                    {% if user.is_anonymous %}-->
+<!--                    <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>-->
+<!--                    <li><a href="{% url 'users:register' %}" class="text-white">Зарегистрироваться</a></li>-->
+<!--                    {% endif %}-->
+<!--                    {% if user.is_authenticated %}-->
+<!--                    <li>-->
+<!--                        <hr class="dropdown-divider">-->
+<!--                    </li>-->
+<!--                    <form action="{% url 'users:logout' %}" method="post">-->
+<!--                        {% csrf_token %}-->
+<!--                        <button type="submit" class="btn btn-link-black">Выйти</button>-->
+<!--                    </form>-->
+<!--                    {% endif %}-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="navbar navbar-dark bg-dark box-shadow">-->
+<!--    <div class="container d-flex justify-content-between">-->
+<!--        <a href="#" class="navbar-brand d-flex align-items-center">-->
+
+<!--        </a>-->
+<!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"-->
+<!--                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
